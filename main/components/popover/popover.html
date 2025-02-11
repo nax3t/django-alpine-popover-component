@@ -1,34 +1,8 @@
 <div x-data="{
     popoverOpen: false,
     popoverArrow: true,
-    popoverPosition: 'bottom',
-    popoverHeight: 0,
-    popoverOffset: 8,
-    popoverHeightCalculate() {
-        this.$refs.popover.classList.add('invisible'); 
-        this.popoverOpen=true; 
-        let that=this;
-        $nextTick(function(){ 
-            that.popoverHeight = that.$refs.popover.offsetHeight;
-            that.popoverOpen=false; 
-            that.$refs.popover.classList.remove('invisible');
-            that.$refs.popoverInner.setAttribute('x-transition', '');
-            that.popoverPositionCalculate();
-        });
-    },
-    popoverPositionCalculate(){
-        if(window.innerHeight < (this.$refs.popoverButton.getBoundingClientRect().top + this.$refs.popoverButton.offsetHeight + this.popoverOffset + this.popoverHeight)){
-            this.popoverPosition = 'top';
-        } else {
-            this.popoverPosition = 'bottom';
-        }
-    }
+    direction: 'below'
 }"
-x-init="
-    that = this;
-    window.addEventListener('resize', function(){
-        popoverPositionCalculate();
-    });"
 class="relative">
     
     <div x-ref="popoverButton" @click="popoverOpen=!popoverOpen">
@@ -37,28 +11,36 @@ class="relative">
 
     <div x-ref="popover"
         x-show="popoverOpen"
-        x-init="setTimeout(function(){ popoverHeightCalculate(); }, 100);"
         x-trap.inert="popoverOpen"
         @click.away="popoverOpen=false;"
         @keydown.escape.window="popoverOpen=false"
-        :class="{ 'top-0 mt-12' : popoverPosition == 'bottom', 'bottom-0 mb-12' : popoverPosition == 'top' }"
-        class="absolute w-[300px] max-w-lg -translate-x-1/2 left-1/2" x-cloak>
-        <div x-ref="popoverInner" x-show="popoverOpen" class="w-full p-4 bg-white border rounded-md shadow-sm border-neutral-200/70">
-            <div x-show="popoverArrow && popoverPosition == 'bottom'" class="absolute top-0 inline-block w-5 mt-px overflow-hidden -translate-x-2 -translate-y-2.5 left-1/2">
+        class="absolute w-[300px] max-w-lg -translate-x-1/2 left-1/2 {% if direction == 'below' %}top-full mt-2{% else %}bottom-full mb-2{% endif %}" 
+        x-cloak>
+        <div x-ref="popoverInner" 
+            x-show="popoverOpen" 
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-1"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-1"
+            class="w-full bg-white border rounded-md shadow-sm border-neutral-200/70">
+            {% if direction == 'below' %}
+            <div class="absolute top-0 inline-block w-5 mt-px overflow-hidden -translate-x-2 -translate-y-2.5 left-1/2">
                 <div class="w-2.5 h-2.5 origin-bottom-left transform rotate-45 bg-white border-t border-l border-neutral-200/70"></div>
             </div>
-            <div x-show="popoverArrow && popoverPosition == 'top'" class="absolute bottom-0 inline-block w-5 mb-px overflow-hidden -translate-x-2 translate-y-2.5 left-1/2">
+            {% else %}
+            <div class="absolute bottom-0 inline-block w-5 mb-px overflow-hidden -translate-x-2 translate-y-2.5 left-1/2">
                 <div class="w-2.5 h-2.5 origin-bottom-left transform rotate-45 bg-white border-b border-r border-neutral-200/70"></div>
             </div>
-            <div class="relative">
-                <div class="p-4">
-                    <div class="text-lg font-medium text-gray-900">John Doe</div>
-                    <div class="border-t border-gray-200 my-3"></div>
-                    <div class="flex flex-col space-y-2">
-                        <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">My Settings</a>
-                        <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">Privacy Policy</a>
-                        <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">Sign Out</a>
-                    </div>
+            {% endif %}
+            <div class="relative p-4">
+                <div class="text-lg font-medium text-gray-900">John Doe</div>
+                <div class="border-t border-gray-200 my-3"></div>
+                <div class="flex flex-col space-y-2">
+                    <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">My Settings</a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">Privacy Policy</a>
+                    <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">Sign Out</a>
                 </div>
             </div>
         </div>
