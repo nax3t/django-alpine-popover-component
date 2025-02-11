@@ -5,7 +5,12 @@
 }"
 class="relative">
     
-    <div x-ref="popoverButton" @click="popoverOpen=!popoverOpen">
+    <div x-ref="popoverButton" 
+        @click="popoverOpen=!popoverOpen"
+        role="button"
+        :aria-expanded="popoverOpen"
+        :aria-controls="$id('popover-content')"
+        :id="$id('popover-trigger')">
         {% slot "trigger" %}{% endslot %}
     </div>
 
@@ -15,7 +20,12 @@ class="relative">
         @click.away="popoverOpen=false;"
         @keydown.escape.window="popoverOpen=false"
         class="absolute w-[300px] max-w-lg -translate-x-1/2 left-1/2 {% if direction == 'below' %}top-full mt-2{% else %}bottom-full mb-2{% endif %}" 
-        x-cloak>
+        x-cloak
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="$id('popover-title')"
+        :id="$id('popover-content')"
+        :aria-hidden="!popoverOpen">
         <div x-ref="popoverInner" 
             x-show="popoverOpen" 
             x-transition:enter="transition ease-out duration-200"
@@ -35,13 +45,8 @@ class="relative">
             </div>
             {% endif %}
             <div class="relative p-4">
-                <div class="text-lg font-medium text-gray-900">John Doe</div>
-                <div class="border-t border-gray-200 my-3"></div>
-                <div class="flex flex-col space-y-2">
-                    <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">My Settings</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">Privacy Policy</a>
-                    <a href="#" class="text-gray-700 hover:text-gray-900 hover:bg-gray-100 px-3 py-2 rounded-md">Sign Out</a>
-                </div>
+                <h2 :id="$id('popover-title')" class="sr-only">Popover Content</h2>
+                {% slot "content" %}{% endslot %}
             </div>
         </div>
     </div>

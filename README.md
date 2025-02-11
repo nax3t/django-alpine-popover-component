@@ -25,4 +25,10 @@ A basic Django 5 application for exploring django-components.
    python manage.py runserver
    ```
 
+## Available Components
+
+### Popover
+An interactive popover menu component built with Alpine.js. Perfect for dropdowns, menus, and tooltips.
+[View Popover Documentation](main/components/popover/README.md)
+
 Visit http://127.0.0.1:8000/ to see the application.
