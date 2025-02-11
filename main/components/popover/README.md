@@ -1,6 +1,10 @@
 # Popover Component
 
-A reusable Django component that creates an interactive popover menu using Django Components and Alpine.js. The popover provides a clean, modern dropdown interface that can be triggered by any element and supports both upward and downward directions.
+A reusable Django component that creates an interactive popover menu using Django Components and Alpine.js. The popover provides a clean, modern dropdown interface that can be triggered by any element and can be placed above or below the trigger element.
+
+![Popover Component Preview](../../../screenshots/demo.png)
+
+> Credit: This component was adapted from [Pines UI Popover](https://devdojo.com/pines/docs/popover), a collection of Alpine.js components.
 
 ## Prerequisites
 
