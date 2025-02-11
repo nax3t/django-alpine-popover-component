@@ -122,10 +122,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "main/components/popover/static",
-]
-
 DJANGO_COMPONENTS = {
     'template_cache_dir': 'components_cache',
     'preload_components': True,
