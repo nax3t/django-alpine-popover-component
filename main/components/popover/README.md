@@ -54,18 +54,18 @@ The popover component can be used in any Django template. Here's a basic example
 
 ```html
 {% component "popover" direction="below" %}
-    {% slot "trigger" %}
+    {% fill "trigger" %}
         <button class="px-4 py-2 bg-blue-500 text-white rounded-md">
             Click me
         </button>
-    {% endslot %}
+    {% endfill %}
     
-    {% slot "content" %}
+    {% fill "content" %}
         <div class="p-4">
             <h3 class="text-lg font-medium">Custom Content</h3>
             <p>Add any content here!</p>
         </div>
-    {% endslot %}
+    {% endfill %}
 {% endcomponent %}
 ```
 
@@ -133,7 +133,7 @@ The popover component uses Alpine.js for interactivity and state management. Her
 
 1. The component initializes with an Alpine.js data object containing:
    - `popoverOpen`: Boolean state for visibility
-   - `direction`: String determining popover position
+   - `popoverArrow`: Boolean to control arrow visibility
 
 2. When the trigger is clicked:
    - The `popoverOpen` state toggles
@@ -151,7 +151,6 @@ The component comes with default TailwindCSS styling but can be customized by ov
 
 - Popover container: Fixed width (300px), max-width support
 - Background: White with a subtle border and shadow
-- Smooth transitions for opening/closing
 - Responsive arrow that matches the popover's direction
 - Hover states for interactive elements
 
